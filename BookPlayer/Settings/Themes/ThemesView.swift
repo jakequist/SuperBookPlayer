@@ -12,7 +12,6 @@ import SwiftUI
 struct ThemesView: View {
   let item: SimpleTheme
 
-  @Environment(\.accountService) private var accountService
   @EnvironmentObject var theme: ThemeViewModel
 
   var body: some View {
@@ -31,15 +30,11 @@ struct ThemesView: View {
         if item == ThemeManager.shared.currentTheme {
           Image(systemName: "checkmark")
             .foregroundColor(theme.linkColor)
-        } else if item.locked && accountService.accessLevel == .free {
-          Image(.premiumFeature)
-            .foregroundColor(theme.linkColor)
         }
       }
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .disabledWithOpacity(item.locked && accountService.accessLevel == .free, opacity: 0.99)
   }
 }
 

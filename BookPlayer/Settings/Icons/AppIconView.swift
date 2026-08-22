@@ -16,7 +16,6 @@ struct AppIconView: View {
 
   let icon: Icon
 
-  @Environment(\.accountService) private var accountService
   @Environment(\.loadingState) private var loadingState
   @EnvironmentObject var theme: ThemeViewModel
 
@@ -53,15 +52,11 @@ struct AppIconView: View {
         if appIcon == icon.id {
           Image(systemName: "checkmark")
             .foregroundColor(theme.linkColor)
-        } else if icon.isLocked && accountService.accessLevel == .free {
-          Image(.premiumFeature)
-            .foregroundColor(theme.linkColor)
         }
       }
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .disabledWithOpacity(icon.isLocked && accountService.accessLevel == .free, opacity: 0.99)
   }
 
   func updateAppIcon(_ icon: Icon) async throws {

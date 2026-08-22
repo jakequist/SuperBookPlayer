@@ -127,8 +127,6 @@ struct SettingsView: View {
               viewModel: HardcoverSettingsViewModel(hardcoverService: hardcoverService)
             )
           )
-        case .tipjar:
-          view = AnyView(SettingsTipJarView())
         case .credits:
           view = AnyView(CreditsView())
         default:

@@ -32,8 +32,7 @@ struct StoryViewer: View {
         onPause: viewModel.pause,
         onResume: viewModel.start,
         onSubscription: viewModel.handleSubscription(option:),
-        onDismiss: viewModel.handleDismiss,
-        onTipJar: viewModel.handleTipJar
+        onDismiss: viewModel.handleDismiss
       )
       .foregroundStyle(Color.white)
       .padding()

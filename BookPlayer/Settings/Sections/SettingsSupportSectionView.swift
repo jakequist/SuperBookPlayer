@@ -30,10 +30,6 @@ struct SettingsSupportSectionView: View {
 
   var body: some View {
     ThemedSection {
-      NavigationLink(value: SettingsScreen.tipjar) {
-        Text("settings_tip_jar_title")
-          .bpFont(.body)
-      }
       Button(action: sendEmail) {
         VStack(alignment: .leading) {
           Text("settings_support_email_title")

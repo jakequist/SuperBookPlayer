@@ -19,8 +19,6 @@ class BPSKANManager: BPLogger {
     case `import`
     /// Registers if an account was created
     case account
-    /// Registers donation event
-    case donation
     /// Registers subscription event
     case subscription
 
@@ -33,8 +31,6 @@ class BPSKANManager: BPLogger {
         return 10
       case .account:
         return 20
-      case .donation:
-        return 30
       case .subscription:
         return 40
       }
@@ -46,8 +42,6 @@ class BPSKANManager: BPLogger {
       switch self {
       case .install, .import, .account:
         return .low
-      case .donation:
-        return .medium
       case .subscription:
         return .high
       }

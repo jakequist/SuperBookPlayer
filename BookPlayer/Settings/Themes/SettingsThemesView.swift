@@ -24,7 +24,6 @@ struct SettingsThemesView: View {
 
   @State private var themes: [SimpleTheme] = ThemeManager.getLocalThemes()
   @State var loadingState = LoadingOverlayState()
-  @State private var showRestoredAlert = false
   @EnvironmentObject var theme: ThemeViewModel
   @Environment(\.accountService) private var accountService
 
@@ -103,23 +102,7 @@ struct SettingsThemesView: View {
     .background(theme.systemBackgroundColor)
     .navigationTitle("themes_title")
     .navigationBarTitleDisplayMode(.inline)
-    .alert("purchases_restored_title", isPresented: $showRestoredAlert) {
-      Button("ok_button", role: .cancel) {}
-    }
     .loadingOverlay(loadingState.show)
-    .toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button("restore_title".localized) {
-          PurchasesManager.restoreTips(
-            loadingState: loadingState
-          ) {
-            accountService.updateAccount(donationMade: true)
-            showRestoredAlert = true
-          }
-        }
-        .foregroundStyle(theme.linkColor)
-      }
-    }
   }
 
   func handleSystemModeUpdate() {

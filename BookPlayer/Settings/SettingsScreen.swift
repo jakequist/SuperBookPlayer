@@ -14,6 +14,5 @@ enum SettingsScreen: String, Hashable {
   case storage, syncbackup
   case shortcuts
   case mediaServers, hardcover
-  case tipjar
   case credits
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 enum SecondOnboardingType: String, Codable {
-  case support, tips
+  case support
 }

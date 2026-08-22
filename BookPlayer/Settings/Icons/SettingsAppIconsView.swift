@@ -12,7 +12,6 @@ import SwiftUI
 struct SettingsAppIconsView: View {
   @State private var icons: [Icon] = Bundle.main.decodeIcons()
   @State var loadingState = LoadingOverlayState()
-  @State private var showRestoredAlert = false
   @EnvironmentObject var theme: ThemeViewModel
   @Environment(\.accountService) private var accountService
 
@@ -34,23 +33,7 @@ struct SettingsAppIconsView: View {
     .background(theme.systemBackgroundColor)
     .navigationTitle("settings_app_icon_title")
     .navigationBarTitleDisplayMode(.inline)
-    .alert("purchases_restored_title", isPresented: $showRestoredAlert) {
-      Button("ok_button", role: .cancel) {}
-    }
     .loadingOverlay(loadingState.show)
-    .toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button("restore_title".localized) {
-          PurchasesManager.restoreTips(
-            loadingState: loadingState
-          ) {
-            accountService.updateAccount(donationMade: true)
-            showRestoredAlert = true
-          }
-        }
-        .foregroundStyle(theme.linkColor)
-      }
-    }
   }
 }
 
