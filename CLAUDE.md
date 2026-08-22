@@ -469,3 +469,51 @@ The crash surfaces and invariants most likely to be broken by a change. (The ful
 12. **`BookPlayerKit` boundary:** `Shared/` importing app-layer types.
 13. **Integration session-expiry / token contracts** (see the integrations section).
 14. Hand-editing `Generated/AutoMockable.generated.swift`; adding code to a top-level **empty stub** folder.
+
+---
+
+## Operating model for Claude (this fork)
+
+This repo is Jake's personal fork of BookPlayer, modified for personal use and deployed directly to his
+phone (no App Store / TestFlight distribution).
+
+### Agent roles — architect delegates, subagents implement
+
+- **The main agent acts as architect / manager.** It owns understanding the task, designing the approach,
+  splitting it into well-scoped pieces, reviewing results, and integrating them. It should NOT grind through
+  large mechanical or lower-level implementation work itself.
+- **Delegate lower-level work to Opus subagents** (Agent tool with `model: "opus"`): file edits from a clear
+  spec, test writing, mechanical refactors, broad code searches, build/log triage. Give each subagent a
+  self-contained brief: the goal, the exact files/areas involved, the relevant invariants from this document
+  (subagents don't inherit conversation context), and the definition of done (which tests must pass).
+- Run independent subagent tasks **in parallel**. The main agent reviews every subagent diff against the
+  invariants in this file before considering the work done.
+
+### TDD — strongly preferred for all new work
+
+- **Write the failing test first**, in `BookPlayerTests/` (XCTest only — no Swift Testing), watch it fail,
+  then implement until it passes, then refactor. Red → green → refactor.
+- New service logic gets tests via protocol seams: mark the protocol `/// sourcery: AutoMockable` and
+  regenerate mocks with Sourcery (never hand-edit `AutoMockable.generated.swift`).
+- Bug fixes start with a regression test that reproduces the bug.
+- UI-only tweaks (pure SwiftUI layout) are exempt when there's no meaningful behavior to assert — but any
+  view-model logic behind them is not.
+- Run the unit tests (`Unit Tests` test plan, `-only-testing:BookPlayerTests`, mirroring CI) before declaring
+  any change complete. A change isn't "done" until tests pass and the app builds for device.
+
+### Working practices
+
+- **Branching:** never commit directly to `develop`; feature branches per change, small focused commits.
+- **Scope discipline:** prefer the smallest diff that achieves the goal; this is a fork tracking upstream
+  (`TortugaPower/BookPlayer`), so gratuitous divergence makes future upstream merges painful. Keep personal
+  modifications isolated and well-commented where they diverge from upstream behavior.
+- **Respect the invariants above** — especially CoreData threading (§ High-risk invariants), the manual
+  migration ritual, `PlayerManager` subscription rebinding, and the `Shared/` dual-target membership rule
+  (every new `Shared/` file must be added to BOTH `BookPlayerKit` and `BookPlayerWatchKit`).
+- **Secrets:** `BuildConfiguration/Debug.xcconfig` is gitignored and holds the local team/bundle/config —
+  never commit it, never overwrite it. New config keys follow the template → Info.plist → `ConfigurationKeys`
+  path.
+- **Local deploy config:** personal builds sign with automatic signing (`CODE_SIGN_STYLE=Automatic`
+  override + `-allowProvisioningUpdates`) using the team and bundle id in `Debug.xcconfig`; install to the
+  phone with `xcrun devicectl device install app`.
+- When a change touches an invariant documented in this file, **update this file in the same PR/commit**.
