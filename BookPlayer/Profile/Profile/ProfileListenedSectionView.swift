@@ -56,15 +56,6 @@ struct ProfileListenedSectionView: View {
 }
 
 #Preview {
-  @Previewable var accountService: AccountService = {
-    let accountService = AccountService()
-    let dataManager = DataManager(coreDataStack: CoreDataStack(testPath: ""))
-    accountService.setup(dataManager: dataManager)
-    accountService.accessLevel = .free
-
-    return accountService
-  }()
-
   @Previewable var libraryService: LibraryService = {
     let libraryService = LibraryService()
     let dataManager = DataManager(coreDataStack: CoreDataStack(testPath: ""))
@@ -78,6 +69,5 @@ struct ProfileListenedSectionView: View {
     ProfileListenedSectionView()
   }
   .environmentObject(ThemeViewModel())
-  .environment(\.accountService, accountService)
   .environment(\.libraryService, libraryService)
 }

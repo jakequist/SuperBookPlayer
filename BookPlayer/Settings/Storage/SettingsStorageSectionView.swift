@@ -10,7 +10,6 @@ import BookPlayerKit
 import SwiftUI
 
 struct SettingsStorageSectionView: View {
-  var accessLevel: AccessLevel
   @EnvironmentObject var theme: ThemeViewModel
   
   var body: some View {
@@ -18,12 +17,6 @@ struct SettingsStorageSectionView: View {
       NavigationLink(value: SettingsScreen.storage) {
         Text("settings_storage_description")
           .bpFont(.body)
-      }
-      if accessLevel == .pro {
-        NavigationLink(value: SettingsScreen.syncbackup) {
-          Text("settings_storage_sync_deleted_description")
-            .bpFont(.body)
-        }
       }
     } header: {
       Text("settings_storage_title")
@@ -34,10 +27,9 @@ struct SettingsStorageSectionView: View {
 }
 
 #Preview {
-  @Previewable var accessLevel: AccessLevel = .pro
   NavigationStack {
     Form {
-      SettingsStorageSectionView(accessLevel: accessLevel)
+      SettingsStorageSectionView()
     }
   }
   .environmentObject(ThemeViewModel())

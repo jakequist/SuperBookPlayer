@@ -20,7 +20,6 @@ extension EnvironmentValues {
   @Entry var hardcoverService: HardcoverService = .init()
   @Entry var loadingState: LoadingOverlayState = .init()
   @Entry var playerState: PlayerState = .init()
-  @Entry var passkeyService: PasskeyServiceProtocol = PasskeyService()
   /// Sticky-sort prefs service. The default is a placeholder shell; the real
   /// instance is injected by `MainCoordinator` after `AppServices` calls
   /// `setup(...)` on it.

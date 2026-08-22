@@ -13,15 +13,9 @@ struct SettingsAppIconsView: View {
   @State private var icons: [Icon] = Bundle.main.decodeIcons()
   @State var loadingState = LoadingOverlayState()
   @EnvironmentObject var theme: ThemeViewModel
-  @Environment(\.accountService) private var accountService
-
-  var showPro: () -> Void
 
   var body: some View {
     List {
-      if accountService.accessLevel == .free {
-        SettingsProBannerSectionView(showPro: showPro)
-      }
       ForEach(icons) { item in
         AppIconView(icon: item)
       }
@@ -71,18 +65,8 @@ extension Bundle {
 }
 
 #Preview {
-  @Previewable var accountService: AccountService = {
-    let accountService = AccountService()
-    let dataManager = DataManager(coreDataStack: CoreDataStack(testPath: ""))
-    accountService.setup(dataManager: dataManager)
-    accountService.accessLevel = .free
-
-    return accountService
-  }()
-
   NavigationStack {
-    SettingsAppIconsView {}
+    SettingsAppIconsView()
   }
   .environmentObject(ThemeViewModel())
-  .environment(\.accountService, accountService)
 }

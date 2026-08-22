@@ -11,7 +11,6 @@ import DirectoryWatcher
 import SwiftUI
 
 struct LibraryRootView: View {
-  let showSecondOnboarding: () -> Void
   let showImport: () -> Void
 
   @State private var path = [LibraryNode]()
@@ -143,7 +142,6 @@ struct LibraryRootView: View {
       playerState.showPlayer = true
     }
     importManager.notifyPendingFiles()
-    showSecondOnboarding()
 
     let pendingActions = AppServices.shared.pendingURLActions
     AppServices.shared.pendingURLActions.removeAll()
@@ -256,6 +254,5 @@ extension LibraryRootView {
 
 #Preview {
   LibraryRootView {
-  } showImport: {
   }
 }

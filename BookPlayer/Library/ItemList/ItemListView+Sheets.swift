@@ -16,8 +16,6 @@ extension ItemListView {
     switch sheet {
     case .itemDetails(let item):
       itemDetailsSheet(for: item)
-    case .queuedTasks:
-      QueuedSyncTasksView()
     case .foldersSelection:
       foldersSelectionSheet()
     case .libraryOptions:

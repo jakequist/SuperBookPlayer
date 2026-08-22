@@ -25,16 +25,9 @@ struct SettingsThemesView: View {
   @State private var themes: [SimpleTheme] = ThemeManager.getLocalThemes()
   @State var loadingState = LoadingOverlayState()
   @EnvironmentObject var theme: ThemeViewModel
-  @Environment(\.accountService) private var accountService
-
-  var showPro: () -> Void
 
   var body: some View {
     List {
-      if accountService.accessLevel == .free {
-        SettingsProBannerSectionView(showPro: showPro)
-      }
-
       ThemedSection {
         Toggle(isOn: $systemModeEnabled) {
           Text("theme_system_title")
@@ -145,18 +138,8 @@ struct SettingsThemesView: View {
 }
 
 #Preview {
-  @Previewable var accountService: AccountService = {
-    let accountService = AccountService()
-    let dataManager = DataManager(coreDataStack: CoreDataStack(testPath: ""))
-    accountService.setup(dataManager: dataManager)
-    accountService.accessLevel = .free
-
-    return accountService
-  }()
-
   NavigationStack {
-    SettingsThemesView {}
+    SettingsThemesView()
   }
   .environmentObject(ThemeViewModel())
-  .environment(\.accountService, accountService)
 }

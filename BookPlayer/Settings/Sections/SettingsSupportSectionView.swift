@@ -13,7 +13,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct SettingsSupportSectionView: View {
-  var accessLevel: AccessLevel
   @EnvironmentObject var theme: ThemeViewModel
   @Environment(\.libraryService) private var libraryService
   @Environment(\.accountService) private var accountService
@@ -138,7 +137,7 @@ struct SettingsSupportSectionView: View {
 #Preview {
   NavigationStack {
     Form {
-      SettingsSupportSectionView(accessLevel: .pro) {
+      SettingsSupportSectionView {
       }
     }
   }

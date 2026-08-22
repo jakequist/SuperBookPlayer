@@ -39,18 +39,8 @@ struct ThemesView: View {
 }
 
 #Preview {
-  @Previewable var accountService: AccountService = {
-    let accountService = AccountService()
-    let dataManager = DataManager(coreDataStack: CoreDataStack(testPath: ""))
-    accountService.setup(dataManager: dataManager)
-    accountService.accessLevel = .free
-
-    return accountService
-  }()
-
   ThemesView(item: .getDefaultTheme())
     .environmentObject(ThemeViewModel())
-    .environment(\.accountService, accountService)
 }
 
 struct ThemeShowcaseView: View {

@@ -90,8 +90,6 @@ class MainCoordinator: NSObject {
 
     let vc = AppHostingViewController(
       rootView: MainView {
-        self.showSecondOnboarding()
-      } showImport: {
         self.showImport()
       }
       .environmentObject(singleFileDownloadService)
@@ -126,21 +124,6 @@ class MainCoordinator: NSObject {
     mainController = vc
 
     AppServices.shared.coreServices?.watchService.startSession()
-  }
-
-  func showSecondOnboarding() {
-    guard let anonymousId = accountService.getAnonymousId() else { return }
-
-    let coordinator = SecondOnboardingCoordinator(
-      flow: .modalOnlyFlow(
-        presentingController: mainController!,
-        modalPresentationStyle: .fullScreen
-      ),
-      anonymousId: anonymousId,
-      accountService: accountService,
-      eventsService: EventsService()
-    )
-    coordinator.start()
   }
 
   func showImport() {

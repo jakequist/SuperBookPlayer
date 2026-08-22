@@ -16,8 +16,6 @@ struct SettingsView: View {
   @State private var path = NavigationPath()
   @State var showMailModal = false
   @State var showMailUnavailableModal = false
-  @State var showLogin = false
-  @State var showCompleteAccount = false
   @State var loadingState = LoadingOverlayState()
 
   @Environment(\.listState) private var listState
@@ -35,20 +33,15 @@ struct SettingsView: View {
   var body: some View {
     NavigationStack(path: $path) {
       Form {
-        if accountService.accessLevel == .free {
-          SettingsProBannerSectionView(showPro: showPro)
-        }
         SettingsAppearanceSectionView()
         SettingsPlaybackSectionView()
-        SettingsStorageSectionView(accessLevel: accountService.accessLevel)
-        if accountService.accessLevel == .pro {
-          SettingsDataUsageSectionView()
-        }
+        SettingsStorageSectionView()
+        SettingsDataUsageSectionView()
         SettingsShortcutsSectionView()
         SettingsiCloudSectionView()
         SettingsIntegrationsSectionView()
         SettingsPrivacySectionView()
-        SettingsSupportSectionView(accessLevel: accountService.accessLevel) {
+        SettingsSupportSectionView {
           if MFMailComposeViewController.canSendMail() {
             showMailModal.toggle()
           } else {
@@ -85,9 +78,9 @@ struct SettingsView: View {
         let view: AnyView
         switch destination {
         case .themes:
-          view = AnyView(SettingsThemesView(showPro: showPro))
+          view = AnyView(SettingsThemesView())
         case .icons:
-          view = AnyView(SettingsAppIconsView(showPro: showPro))
+          view = AnyView(SettingsAppIconsView())
         case .controls:
           view = AnyView(SettingsPlayerControlsView())
         case .autoplay:
@@ -104,13 +97,6 @@ struct SettingsView: View {
                   folderURL: DataManager.getProcessedFolderURL(),
                   listState: listState
                 )
-            )
-          )
-        case .syncbackup:
-          view = AnyView(
-            StorageCloudDeletedView(
-              viewModel:
-                StorageCloudDeletedViewModel(folderURL: DataManager.getBackupFolderURL())
             )
           )
         case .mediaServers:
@@ -137,26 +123,9 @@ struct SettingsView: View {
           view
           .miniPlayerSafeAreaInset()
       }
-      .sheet(isPresented: $showLogin) {
-        NavigationStack {
-          LoginView()
-        }
-      }
-      .sheet(isPresented: $showCompleteAccount) {
-        SettingsCompleteAccountView()
-          .presentationDetents([.medium])
-      }
     }
     .foregroundStyle(theme.primaryColor)
     .tint(theme.linkColor)
-  }
-
-  private func showPro() {
-    if accountService.getAccountId() != nil {
-      showCompleteAccount = true
-    } else {
-      showLogin = true
-    }
   }
 
   // MARK: - Email utils

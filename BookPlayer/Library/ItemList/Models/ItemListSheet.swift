@@ -12,7 +12,6 @@ import Foundation
 /// Represents all possible sheet types in ItemListView
 enum ItemListSheet: Identifiable {
   case itemDetails(SimpleLibraryItem)
-  case queuedTasks
   case foldersSelection
   case libraryOptions
 
@@ -20,8 +19,6 @@ enum ItemListSheet: Identifiable {
     switch self {
     case .itemDetails(let item):
       return "itemDetails-\(item.id)"
-    case .queuedTasks:
-      return "queuedTasks"
     case .foldersSelection:
       return "foldersSelection"
     case .libraryOptions:

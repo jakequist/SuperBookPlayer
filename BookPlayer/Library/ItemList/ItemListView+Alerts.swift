@@ -37,9 +37,6 @@ extension ItemListView {
   
   @ViewBuilder
   func queuedTasksAlert() -> some View {
-    Button("sync_tasks_view_title") {
-      activeSheet = .queuedTasks
-    }
     Button("ok_button", role: .cancel) {}
   }
   

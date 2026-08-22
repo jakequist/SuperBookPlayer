@@ -10,7 +10,6 @@ import BookPlayerKit
 import SwiftUI
 
 struct MainView: View {
-  let showSecondOnboarding: () -> Void
   let showImport: () -> Void
 
   @State private var listState = ListStateManager()
@@ -32,10 +31,7 @@ struct MainView: View {
   var body: some View {
     TabView {
       Tab("library_title", systemImage: "books.vertical") {
-        LibraryRootView(
-          showSecondOnboarding: showSecondOnboarding,
-          showImport: showImport
-        )
+        LibraryRootView(showImport: showImport)
         .background {
           TabBarHeightReader { height in
             if tabBarContentHeight != height {
@@ -185,6 +181,5 @@ struct MainView: View {
 
 #Preview {
   MainView {
-  } showImport: {
   }
 }
