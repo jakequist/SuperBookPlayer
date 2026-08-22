@@ -29,7 +29,7 @@ extension UIColor {
   }
 
   public static var appTintColor: UIColor {
-    return UIColor(hex: "3488D1")
+    return UIColor(hex: "D13434")
   }
 
   public static var textColor: UIColor {

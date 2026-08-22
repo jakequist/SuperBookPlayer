@@ -19,7 +19,7 @@ struct PricingBoxView: View {
   }
   var foregroundColor: Color {
     isSelected 
-    ? Color(UIColor(hex: "3488D1"))
+    ? Color(UIColor(hex: "D13434"))
     : Color(UIColor(hex: "334046"))
   }
   var backgroundColor: Color {

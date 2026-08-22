@@ -13,8 +13,8 @@ struct StoryBackgroundView: View {
     Rectangle()
       .fill(LinearGradient(
         gradient: Gradient(colors: [
-          Color(UIColor(hex: "4285C5")),
-          Color(UIColor(hex: "3D4494"))
+          Color(UIColor(hex: "C54242")),
+          Color(UIColor(hex: "943D3D"))
         ]),
         startPoint: .bottomLeading,
         endPoint: .topTrailing
